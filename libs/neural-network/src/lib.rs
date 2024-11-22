@@ -1,3 +1,4 @@
+use core::f32;
 use std::process::Output;
 
 #[derive(Debug)]
@@ -38,6 +39,12 @@ struct Neuron {
 
 impl Neuron {
     pub fn propagate(&self, inputs: Vec<f32>) -> f32 {
-        todo!()
+        assert_eq!(inputs.len(), self.output_weights.len());
+        let output = inputs
+            .iter()
+            .zip(&self.output_weights)
+            .map(|(input, weight)| input * weight)
+            .sum::<f32>();
+        (output + self.bias).max(0.0)
     }
 }
